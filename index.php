@@ -64,7 +64,7 @@ require_once "config/database.php";
             <div class="container-fluid px-lg-5">
                 <span class="navbar-brand text-white">
                     <i class="fa-solid fa-laptop-code me-2"></i>
-                    Aplikasi CRUD <span class="d-none d-md-inline">dengan PHP 8, MySQL 8, Bootstrap 5, dan jQuery AJAX</span>
+                    Pendataan Siswa <span class="d-none d-md-inline">Berbasis online</span>
                 </span>
             </div>
         </nav>
