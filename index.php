@@ -84,9 +84,7 @@ require_once "config/database.php";
     <footer class="footer mt-auto bg-white shadow py-4">
         <div class="container-fluid px-lg-5">
             <!-- copyright -->
-            <div class="copyright text-center mb-2 mb-md-0">
-                &copy; 2023 - <a href="https://pustakakoding.com/" target="_blank" class="text-brand text-decoration-none">Pustaka Koding</a>. All rights reserved.
-            </div>
+
         </div>
     </footer>
 
