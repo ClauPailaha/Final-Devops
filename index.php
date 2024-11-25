@@ -21,7 +21,7 @@ require_once "config/database.php";
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Aplikasi CRUD dengan PHP 8, MySQL 8, Bootstrap 5, dan jQuery AJAX">
+    <meta name="description" content="Pendataan Siswa">
     <meta name="author" content="Indra Styawantoro">
 
     <!-- Title -->
