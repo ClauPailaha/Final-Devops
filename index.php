@@ -25,7 +25,7 @@ require_once "config/database.php";
     <meta name="author" content="Indra Styawantoro">
 
     <!-- Title -->
-    <title>Aplikasi CRUD dengan PHP 8, MySQL 8, Bootstrap 5, dan jQuery AJAX</title>
+    <title>Aplikasi CRUD dengan PHP 7, MySQL 8, Bootstrap 5, dan jQuery AJAX</title>
 
     <!-- Favicon icon -->
     <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
