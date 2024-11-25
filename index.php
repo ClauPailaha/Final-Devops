@@ -15,7 +15,7 @@ require_once "config/database.php";
     <meta name="author" content="Indra Styawantoro">
 
     <!-- Title -->
-    <title>Pendataan Siswa</title>
+    <title>Pendataan Fabrizio</title>
 
     <!-- Favicon icon -->
     <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
