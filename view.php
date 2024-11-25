@@ -29,6 +29,7 @@
         <table id="tabel-siswa" class="table table-bordered table-striped table-hover" style="width:100%">
             <thead class="table-light">
                 <th class="text-center">No.</th>
+                <th class="text-center">Foto</th>
                 <th class="text-center">ID Siswa</th>
                 <th class="text-center">Nama Lengkap</th>
                 <th class="text-center">Jenis Kelamin</th>
@@ -128,6 +129,24 @@
                                 <div class="invalid-feedback">WhatsApp tidak boleh kosong.</div>
                             </div>
                         </div>
+
+                        <div class="col-xl-6">
+                            <div class="mb-3 ps-xl-3">
+                                <label class="form-label">Foto Profil <span id="required" class="text-danger">*</span></label>
+                                <input type="file" accept=".jpg, .jpeg, .png" id="foto" name="foto" class="form-control" autocomplete="off">
+                                <div class="invalid-feedback">Foto profil tidak boleh kosong.</div>
+
+                                <div class="mt-4">
+                                    <img id="foto_preview" class="border border-2 img-fluid rounded-4 shadow-sm" alt="Foto Profil" width="240" height="240">
+                                </div>
+
+                                <div class="form-text mt-4">
+                                    Keterangan : <br>
+                                    - Tipe file yang bisa diunggah adalah *.jpg atau *.png. <br>
+                                    - Ukuran file yang bisa diunggah maksimal 1 Mb.
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -155,6 +174,9 @@
                 <!-- detail data -->
                 <div class="d-flex flex-column flex-xl-row">
                     <div class="flex-shrink-0 text-center mb-5 mb-xl-0">
+                        <div class="foto-profil-detail">
+                            <img id="dt_foto" class="border border-2 img-fluid rounded-4 shadow" alt="Foto Profil" width="240" height="240">
+                        </div>
                     </div>
                     <div class="flex-grow-1 text-muted fw-light ms-xl-5">
                         <div class="table-responsive">
@@ -238,6 +260,12 @@
             // tampilkan data
             "columnDefs": [ 
                 { "targets": 0, "data": null, "orderable": false, "searchable": false, "width": '30px', "className": 'text-center' },
+                { "targets": 1, "width": "50px", "className": "text-center",
+                    "render": function ( data, type, row ) {
+                        var foto = "<img src=\"images/" + data + "\" class=\"border border-2 img-fluid rounded-3\" alt=\"Foto Profil\" width=\"70px\" height=\"70px\">";
+                        return foto;
+                    }
+                },
                 { "targets": 2, "width": "70px", "className": "text-center" },
                 { "targets": 3, "width": "200px" },
                 { "targets": 4, "width": "80px", "className": "text-center" },
@@ -294,6 +322,17 @@
                         $('#frm-siswa')[0].reset();
                         // hapus class was-validated pada form
                         $("#frm-siswa").removeClass('was-validated');
+
+                        /** buat input foto wajib diisi */
+                        // hapus class d-none pada label Foto Profil
+                        $('#required').removeClass('d-none');
+                        // tambahkan attribute required pada input foto
+                        $('#foto').attr('required', true);
+
+                        // tampilkan data "id_siswa"
+                        $('#id_siswa').val(result);
+                        // tampilkan foto default
+                        $('#foto_preview').attr('src','images/img-default.png');
                     }, 500);
                 }
             });
@@ -340,6 +379,7 @@
                         $('#dt_alamat').text(result.alamat);
                         $('#dt_email').text(result.email);
                         $('#dt_whatsapp').text(result.whatsapp);
+                        $('#dt_foto').attr('src','images/'+result.foto_profil);
                     }, 500);
                 }
             });
@@ -375,11 +415,14 @@
                         $('#mdl-label').text('Ubah Data Siswa');
                         // hapus class was-validated pada form
                         $("#frm-siswa").removeClass('was-validated');
+                        // reset input foto
+                        $('#foto').val('');
+
                         /** buat input foto tidak wajib diisi */
                         // tambahkan class d-none pada label Foto Profil
                         $('#required').addClass('d-none');
                         // hapus attribute required pada input foto
-
+                        $('#foto').removeAttr('required');
 
                         // ubah format tanggal menjadi Hari-Bulan-Tahun (d-m-Y) sebelum ditampilkan ke form
                         var tanggal        = result.tanggal_daftar;
@@ -404,12 +447,71 @@
                         $('#alamat').val(result.alamat);
                         $('#email').val(result.email);
                         $('#whatsapp').val(result.whatsapp);
+                        $('#foto_preview').attr('src','images/'+result.foto_profil);
                     }, 500);
                 }
             });
         });
 
         // Validasi file dan preview foto sebelum diunggah
+        $('#foto').change(function() {
+            // mengambil value dari file
+            var filePath = $('#foto').val();
+            var fileSize = $('#foto')[0].files[0].size;
+            // tentukan extension file yang diperbolehkan
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+
+            // Jika tipe file yang diunggah tidak sesuai dengan "allowedExtensions"
+            if (!allowedExtensions.exec(filePath)) {
+                // tampilkan pesan peringatan tipe file tidak sesuai
+                $.notify({
+                    title: '<h5 class="font-weight-bold mb-1"><i class="fas fa-exclamation-triangle me-2"></i>Peringatan!</h5>',
+                    message: 'Tipe file foto tidak sesuai. Harap unggah file foto yang memiliki tipe *.jpg atau *.png.'
+                }, {
+                    type: 'warning',
+		            allow_dismiss: false,
+                });
+                // reset input file
+                $('#foto').val('');
+                // tampilkan file default
+                $('#foto_preview').attr('src', 'images/img-default.png');
+
+                return false;
+            }
+            // jika ukuran file yang diunggah lebih dari 1 Mb
+            else if (fileSize > 1000000) {
+                // tampilkan pesan peringatan ukuran file tidak sesuai
+                $.notify({
+                    title: '<h5 class="font-weight-bold mb-1"><i class="fas fa-exclamation-triangle me-2"></i>Peringatan!</h5>',
+                    message: 'Ukuran file foto lebih dari 1 Mb. Harap unggah file foto yang memiliki ukuran maksimal 1 Mb.'
+                }, {
+                    type: 'warning',
+		            allow_dismiss: false,
+                });
+                // reset input file
+                $('#foto').val('');
+                // tampilkan file default
+                $('#foto_preview').attr('src', 'images/img-default.png');
+
+                return false;
+            }
+            // jika file yang diunggah sudah sesuai, tampilkan preview file
+            else {
+                // mengambil value dari file
+                var fileInput = $('#foto')[0];
+
+                if (fileInput.files && fileInput.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        // preview file
+                        $('#foto_preview').attr('src', e.target.result);
+                    };
+                };
+                // membaca file sebagai data URL
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        });
 
         /** Proses
          ********************
@@ -440,6 +542,7 @@
                     data.append('alamat', $('#alamat').val());
                     data.append('email', $('#email').val());
                     data.append('whatsapp', $('#whatsapp').val());
+                    data.append('foto', $('#foto')[0].files[0]);
 
                     // ajax request untuk insert data siswa
                     $.ajax({
@@ -508,6 +611,7 @@
                     data.append('alamat', $('#alamat').val());
                     data.append('email', $('#email').val());
                     data.append('whatsapp', $('#whatsapp').val());
+                    data.append('foto', $('#foto')[0].files[0]);
 
                     // ajax request untuk update data siswa
                     $.ajax({
