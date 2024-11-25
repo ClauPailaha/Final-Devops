@@ -80,14 +80,6 @@ require_once "config/database.php";
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer mt-auto bg-white shadow py-4">
-        <div class="container-fluid px-lg-5">
-            <!-- copyright -->
-
-        </div>
-    </footer>
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
