@@ -442,7 +442,10 @@ class SSP {
 				"mysql:host={$sql_details['host']};dbname={$sql_details['db']}",
 				$sql_details['user'],
 				$sql_details['pass'],
-				array( PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION )
+				array(
+					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_TIMEOUT => 5 // Set timeout to 5 seconds
+				)
 			);
 		}
 		catch (PDOException $e) {
